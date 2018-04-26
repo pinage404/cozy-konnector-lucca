@@ -1,14 +1,19 @@
 {
   "version": "1.0.0",
-  "name": "Booking.com",
+  "name": "Facebook",
   "type": "konnector",
   "language": "node",
+  "slug": "facebook",
   "icon": "icon.svg",
-  "slug": "bookingdotcom",
-  "source": "git://github.com/konnectors/booking.com.git",
+  "source": "git://github.com/konnectors/cozy-konnector-facebook.git",
   "editor": "Cozy",
-  "vendor_link": "http://secure.booking.com/myreservations.html",
+  "vendor_link": "https://facebook.com",
   "categories": ["other"],
+  "data_types": ["pictures"],
+  "oauth": {
+    "account_type": "facebook",
+    "scope": "user_photos"
+  },
   "fields": {
     "advancedFields": {
       "folderPath": {
@@ -17,66 +22,55 @@
       }
     }
   },
-  "data_types": [
-    "bill"
-  ],
-  "screenshots": [],
   "permissions": {
-    "bank operations": {
-      "type": "io.cozy.bank.operations"
+    "albums": {
+      "type": "io.cozy.photos.albums"
     },
-    "bills": {
-      "type": "io.cozy.bills"
+    "accounts": {
+      "type": "io.cozy.accounts"
     },
     "files": {
       "type": "io.cozy.files"
-    },
-    "accounts": {
-      "type": "io.cozy.accounts",
-      "verbs": ["GET"]
     }
   },
-  "developer": {
-    "name": "Cozy",
-    "url": "https://cozy.io"
-  },
-  "langs": ["fr", "en"],
   "locales": {
     "fr": {
-      "short_description": "Récupère vos réservations booking.com",
-      "long_description": "Récupère vos réservations booking.com",
+      "short_description": "Connecteur Facebook",
+      "long_description": "Ce connecteur récupère les albums photos que vous avez publiés sur facebook.",
       "permissions": {
-        "bank operations": {
-          "description": "Utilisé pour relier les factures à des operations bancaires"
-        },
-        "bills": {
-          "description": "Utilisé pour sauver les données des factures"
+        "books": {
+          "description": "Utilisé pour créer les albums ou sont sauvegardées les photos."
         },
         "files": {
-          "description": "Utilisé pour sauvegarder les factures"
+          "description": "Utilisé pour sauvegarder les photos."
         },
         "accounts": {
-          "description": "Utilisé pour récupérer les informations de votre compte"
+          "description": "Utilisé pour obtenir les données du compte"
         }
       }
     },
     "en": {
-      "short_description": "Fetch your bookings from booking.com",
-      "long_description": "Fetch your bookings from booking.com",
+      "short_description": "Connector Facebook",
+      "long_description": "This connector retrieves your facebook pictures albums.",
       "permissions": {
-        "bank operations": {
-          "description": "Required to link bank operations to bills"
-        },
-        "bills": {
-          "description": "Required to save the bills data"
-        },
-        "files": {
-          "description": "Required to save the file documents"
+        "albums": {
+          "description": "Required to create the albums where the photo will be saved",
+          "type": "io.cozy.photos.albums"
         },
         "accounts": {
-          "description": "Required to get the account's data"
+          "description": "Required to get the account's data",
+          "type": "io.cozy.accounts"
+        },
+        "files": {
+          "description": "Required to save images",
+          "type": "io.cozy.files"
         }
       }
     }
+  },
+  "langs": ["fr", "en"],
+  "developer": {
+    "name": "Cozy",
+    "url": "https://cozy.io"
   }
 }
