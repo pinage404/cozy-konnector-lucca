@@ -7,9 +7,15 @@
   "slug": "template",
   "source": "git://github.com/konnectors/cozy-konnector-template.git",
   "editor": "Cozy",
-  "vendor_link": "Link to the target website",
+  "vendor_link": "https://www.lucca.fr",
   "categories": ["other"],
   "fields": {
+    "login": {
+      "type": "text"
+    },
+    "password": {
+      "type": "password"
+    },
     "advancedFields": {
       "folderPath": {
         "advanced": true,
@@ -18,13 +24,10 @@
     }
   },
   "data_types": [
-    "bill"
+    "documents"
   ],
   "screenshots": [ "screenshots/screenshot1.png" ],
   "permissions": {
-    "books": {
-      "type": "io.cozy.books"
-    },
     "files": {
       "type": "io.cozy.files"
     },
@@ -47,7 +50,7 @@
           "description": "Utilisé pour sauvegarder les références des livres"
         },
         "files": {
-          "description": "Utilisé pour sauvegarder les factures"
+          "description": "Utilisé pour sauvegarder les documents fichiers"
         },
         "accounts": {
           "description": "Utilisé pour obtenir les données du compte"
@@ -59,7 +62,7 @@
       "long_description": "This template fetches a list of books from a scraping website",
       "permissions": {
         "books": {
-          "description": "Required to save books references"
+          "description": "Required to save the file documents"
         },
         "files": {
           "description": "Required to save the bills"
