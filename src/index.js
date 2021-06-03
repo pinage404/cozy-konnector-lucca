@@ -11,7 +11,8 @@ const request = requestFactory({
   json: true,
   jar: true
 })
-const moment = require('moment')
+const parseISO = require('date-fns/parseISO')
+const format = require('date-fns/format')
 
 const baseStartUrl = 'https://www.lucca.fr'
 let baseWorkspaceUrl
@@ -109,8 +110,8 @@ async function getPayslips() {
 
   return payslipsInfos.data.items.map(function(payslip) {
     const url = baseWorkspaceUrl + '/pagga/download/' + payslip.id
-    const date = moment(payslip.import.endDate, moment.ISO_8601)
-    const filename = date.format('YYYY_MM') + '.pdf'
+    const date = parseISO(payslip.import.endDate)
+    const filename = format(date, 'yyyy_MM') + '.pdf'
 
     return {
       fileurl: url,
