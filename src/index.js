@@ -6,17 +6,17 @@ const {
   errors
 } = require('cozy-konnector-libs')
 const request = requestFactory({
-  //cheerio: true
+  // cheerio: true,
   debug: true,
   json: true,
   jar: true
 })
+const cheerio = require('cheerio')
 const parseISO = require('date-fns/parseISO')
 const format = require('date-fns/format')
 
 const baseStartUrl = 'https://www.lucca.fr'
 let baseWorkspaceUrl
-let userId
 
 module.exports = new BaseKonnector(start)
 // The start function is run by the BaseKonnector instance only when it got all the account
@@ -42,8 +42,7 @@ async function logIn(fields) {
         request: 'emailpass'
       }
     })
-    baseWorkspaceUrl = details.data.user.instance.href
-    userId = details.data.user.login
+    baseWorkspaceUrl = details.data[0]
 
     // const uri =
     //   "https://auth.payfit.com/updateCurrentCompany?application=hr-apps/user&companyId=";
@@ -63,15 +62,26 @@ async function logIn(fields) {
     }
   }
 
+  log('info', "Get the verification token hidden in the company's login's form")
+  const form = await request({
+    uri: baseWorkspaceUrl + '/identity/login',
+    method: 'GET'
+  })
+  const $ = cheerio.load(form)
+  const requestVerificationToken = $(
+    'input[name="__RequestVerificationToken"]'
+  ).attr('value')
+
   log('info', 'Log in with company URL')
   try {
     await request({
-      uri: baseWorkspaceUrl + '/login',
+      uri: baseWorkspaceUrl + '/identity/login',
       method: 'POST',
       form: {
-        login: userId,
+        UserName: fields.login,
         Password: fields.password,
-        PersistentCookie: true
+        IsPersistent: true,
+        __RequestVerificationToken: requestVerificationToken
       }
     })
     // const uri =
