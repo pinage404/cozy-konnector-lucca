@@ -4,7 +4,7 @@
   "description": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/konnectors/cozy-konnector-template.git"
+    "url": "git@github.com:konnectors/template.git"
   },
   "keywords": [],
   "author": "Cozy Cloud",
@@ -12,37 +12,35 @@
   "main": "./src/index.js",
   "eslintConfig": {
     "extends": [
-      "eslint-config-cozy-app"
+      "cozy-app"
     ]
   },
   "eslintIgnore": [
-    "build"
+    "build",
+    "data"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
   "scripts": {
     "start": "node ./src/index.js",
-    "dev": "cozy-run-dev",
-    "standalone": "cozy-run-standalone",
-    "test": "konitor testit .",
-    "check": "konitor check .",
+    "dev": "cozy-konnector-dev",
+    "standalone": "cozy-konnector-standalone",
+    "pretest": "npm run clean",
+    "clean": "rm -rf ./data",
     "build": "webpack",
-    "precommit": "yarn lint",
     "lint": "eslint --fix .",
-    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-https://$GITHUB_TOKEN@github.com/konnectors/cozy-konnector-template.git}",
-    "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})"
+    "deploy": "git-directory-deploy --directory build/ --branch ${DEPLOY_BRANCH:-build} --repo=${DEPLOY_REPOSITORY:-$npm_package_repository_url}",
+    "cozyPublish": "cozy-app-publish --token $REGISTRY_TOKEN --build-commit $(git rev-parse ${DEPLOY_BRANCH:-build})",
+    "travisDeployKey": "./bin/generate_travis_deploy_key"
   },
   "dependencies": {
-    "cozy-konnector-libs": "4.1.9"
+    "cozy-konnector-libs": "4.42.0"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "4.5.1",
-    "cozy-app-publish": "0.3.6",
-    "cozy-jobs-cli": "1.0.18",
-    "eslint": "4.19.1",
-    "eslint-config-cozy-app": "0.5.1",
-    "git-directory-deploy": "1.5.1",
-    "husky": "0.14.3",
-    "konitor": "0.8.2",
-    "webpack": "4.6.0",
-    "webpack-cli": "2.1.2"
+    "cozy-jobs-cli": "1.16.0",
+    "cozy-konnector-build": "1.2.0"
   }
 }
